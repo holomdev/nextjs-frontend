@@ -1,9 +1,10 @@
 import { LoginFormValues, LoginTextField } from "@/components/login";
 import { manuals, white } from "@/themes/colors";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Link } from "@mui/material";
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema } from "@/utils/validation";
+import NextLink from 'next/link';
 
 export default function Home() {
 
@@ -34,6 +35,16 @@ export default function Home() {
             <Typography variant="h6" textAlign="center" mt={2} mb={2}>ACME</Typography>
             <LoginTextField name="email" control={control} label={"Correo"} />
             <LoginTextField name="password" control={control} label={"Password"} type="password" />
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }} py={2}>
+              <NextLink href={"/register"} passHref legacyBehavior>
+                <Link>Crear cuenta</Link>
+              </NextLink>
+              <NextLink href={"/recovery"} passHref legacyBehavior>
+                <Link>Recuperar contraseña</Link>
+              </NextLink>
+            </Box>
+
             <Button type="submit" variant="contained" fullWidth disabled={!isValid}>Iniciar sesión</Button>
           </form>
         </Box>
