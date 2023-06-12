@@ -7,7 +7,7 @@ import { LoginSchema } from "@/utils/validation";
 
 export default function Home() {
 
-  const { control, handleSubmit, trigger, reset, formState: { isValid } } = useForm<LoginFormValues>({
+  const { control, handleSubmit, reset, formState: { isValid } } = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
     mode: 'all'
   })
@@ -34,7 +34,7 @@ export default function Home() {
             <Typography variant="h6" textAlign="center" mt={2} mb={2}>ACME</Typography>
             <LoginTextField name="email" control={control} label={"Correo"} />
             <LoginTextField name="password" control={control} label={"Password"} type="password" />
-            <Button type="submit" variant="contained" fullWidth>Iniciar sesión</Button>
+            <Button type="submit" variant="contained" fullWidth disabled={!isValid}>Iniciar sesión</Button>
           </form>
         </Box>
       </Box>
