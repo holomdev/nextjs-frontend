@@ -6,7 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema } from "@/utils/validation";
 import NextLink from 'next/link';
 
+// ------------------------------------------
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+// ------------------------------------------
+
 export default function Home() {
+  const router = useRouter();
+  const callbackUrl = (router.query?.callbackUrl as string) ?? "/home";
 
   const { control, handleSubmit, reset, formState: { isValid } } = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
@@ -14,8 +21,18 @@ export default function Home() {
   })
 
   const onSubmit = async (data: LoginFormValues) => {
-    reset()
-    console.log(data)
+    const { email, password } = data
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    if (result?.error) {
+      console.log(result.error)
+    } else {
+      reset()
+      router.push(callbackUrl);
+    }
   }
 
   return (
