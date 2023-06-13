@@ -10,6 +10,7 @@ import NextLink from 'next/link';
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 // ------------------------------------------
+import { toast } from 'react-toastify'
 
 export default function Home() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function Home() {
       redirect: false,
     });
     if (result?.error) {
-      console.log(result.error)
+      toast.error("Las credenciales no son validas")
     } else {
       reset()
       router.push(callbackUrl);
