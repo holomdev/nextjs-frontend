@@ -30,11 +30,17 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
-  session: {
-    strategy: "jwt"
-  },
   pages: {
     signIn: "/"
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user = token
+      return session
+    },
+    async jwt({token, user}) {
+      return {...token, ...user}
+    }
   }
 }
 
