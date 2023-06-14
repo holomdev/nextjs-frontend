@@ -42,6 +42,9 @@ const HomePage = () => {
           <Box>
             {data && JSON.stringify(data)}
           </Box>
+          <Box width="300px">
+            <Button onClick={() => console.log({ session })}>Log Session</Button>
+          </Box>
         </Box>
       </Box>
     </>
