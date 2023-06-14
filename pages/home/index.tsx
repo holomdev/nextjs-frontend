@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const HomePage = () => {
   const { data: session } = useSession()
@@ -20,9 +20,9 @@ const HomePage = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Hola, {session?.user?.name}
+              Hola, {session?.user?.name} 
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" onClick={() => signOut()}>Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>
