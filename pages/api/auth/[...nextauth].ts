@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "@/lib/axios";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -11,18 +12,12 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, _req) {
-        const res = await fetch("http://localhost:3500/authentication/sign-in", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          })
+        const res = await axios.post("/authentication/sign-in", {
+          email: credentials?.email,
+          password: credentials?.password,
         });
         
-        const user = await res.json();
+        const user = await res.data;
         if (user?.error) {
           return null
         } else {
